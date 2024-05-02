@@ -15,7 +15,7 @@ options=st.sidebar.selectbox("MENU",['Gender Lense','Age_Group Lense','State Len
 if options=='Gender Lense':
     btn0=st.sidebar.button('Show Gender Based analysis')
     if btn0:
-        st.title('Gender Wise Comparision on Purchase of Diwali Goods')
+        st.title('Gender Wise Comparision on Purchase of Goods During Diwali')
         temp_ser=df['gender'].value_counts()
 
         plt.figure(figsize=(5,4))
@@ -38,10 +38,25 @@ if options=='Gender Lense':
         st.markdown('<hr color="#ff0000" size="4">', unsafe_allow_html=True)
         st.write("From above grpah we can see that most of the buyer are females and even the money spend by them on buying is greater than that of male")
 
-# if options=='Age_Group Lense':
-#     btn1=st.sidebar.button('Show Age group based analysis')
-#     if btn1:
-#         ax=sns.countplot(data=df,x="age_group",hue='gender')
-#         for bars in ax.containers:
-#              ax.bar_label(bars)
-#         plt.title("")
+if options=='Age_Group Lense':
+    st.title('Age Group Wise Comparision on Purchase of  Goods During Diwali')
+    btn1=st.sidebar.button('Show Age group based analysis')
+    if btn1:
+        ax=sns.countplot(data=df,x="age_group",hue='gender')
+        for bars in ax.containers:
+             ax.bar_label(bars)
+        plt.title("Age Group vs Number of Orders")
+        plt.ylabel("Number of Orders")
+        st.pyplot()
+
+        st.markdown('<hr color="#ff0000" size="4">', unsafe_allow_html=True)
+
+        sales_age=df.groupby('age_group',as_index=False)['amount'].sum()
+        ax=sns.barplot(x='age_group',y='amount',data=sales_age,color='maroon')
+        for bars in ax.containers:
+            ax.bar_label(bars)
+        plt.title("Total Sales Amount vs Age Group")
+        st.pyplot()
+
+        st.markdown('<hr color="#ff0000" size="4">', unsafe_allow_html=True)
+        st.write(" From above graph we can see the most of the buyers are of the age group between 26-35 yrs female")
