@@ -7,7 +7,9 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 #reading dataset
 df=pd.read_csv('diwali_cleaned.csv')
 
+
 st.set_page_config(layout='wide',page_title='Diwali Analysis')
+st.title('Sales Analysis on Diwali ')
 # adding sidebar 
 options=st.sidebar.selectbox("MENU",['Gender Lense','Age_Group Lense','State Lense',"Marital Status Lense",'Product Category Lense','Occupation Lense'],placeholder='Choose an options',index=None)
 
@@ -131,4 +133,21 @@ if options=='Product Category Lense':
         plt.title("Product wise Analysis",fontsize=50)
         st.pyplot()
         
+if options=="Occupation Lense":
+    btn5=st.sidebar.button("Show Occupation Based Analysis")
+    if btn5:
+        st.title('purchase analysis according to the occupation of Customer')
+        st.markdown('<hr color="#ff0000" size="1">', unsafe_allow_html=True)
 
+        product=df.groupby('occupation',as_index=False)['orders'].sum().sort_values(by='orders',ascending=False,ignore_index=True)
+        ax=sns.barplot(product,x='occupation',y='orders')
+        plt.xticks(rotation=90)
+
+        for bar in ax.containers:
+            ax.bar_label(bar)
+
+        plt.ylabel('Orders Count',fontsize=20)
+        plt.xlabel('Occupation',fontsize=20)
+        plt.title("Occupation Wise Analysis",fontsize=30)
+
+        st.pyplot()
