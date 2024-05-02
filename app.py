@@ -94,4 +94,22 @@ if options=='State Lense':
         plt.ylabel('Amount(RS.)')
         st.pyplot()
         
+if options=='Marital Status Lense':
+    btn3=st.sidebar.button('Show Marital Based Analysis')
+    if btn3:
+        st.title('State Wise Comparision on Purchase of  Goods During Diwali')
+        st.markdown('<hr color="#ff0000" size="1">', unsafe_allow_html=True)
+
+        ax=sns.countplot(data=df,x='marital_status',width=0.4,hue='gender')
+        plt.xticks(ticks=[0,1],labels=['married','unmarried'])
+        for i in ax.containers:
+            ax.bar_label(i)
+            
+        plt.ylabel('Orders Count',fontsize=30)
+        plt.xlabel('Marital Staus',fontsize=30)
+        plt.title("Marital Status Analysis",fontsize=50)
+
+        st.pyplot()
+        
+        
 
