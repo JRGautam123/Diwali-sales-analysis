@@ -97,7 +97,7 @@ if options=='State Lense':
 if options=='Marital Status Lense':
     btn3=st.sidebar.button('Show Marital Based Analysis')
     if btn3:
-        st.title('State Wise Comparision on Purchase of  Goods During Diwali')
+        st.title('Matarial Based Analysis on Purchase of  Goods During Diwali')
         st.markdown('<hr color="#ff0000" size="1">', unsafe_allow_html=True)
 
         ax=sns.countplot(data=df,x='marital_status',width=0.4,hue='gender')
@@ -110,6 +110,25 @@ if options=='Marital Status Lense':
         plt.title("Marital Status Analysis",fontsize=50)
 
         st.pyplot()
+
+# Product Category Lense','Occupation Lense
+if options=='Product Category Lense':
+    btn4=st.sidebar.button('Show Most Ordered Product')
+    if btn4:
+        st.title('Most Higlighted Product During  Diwali')
+        st.markdown('<hr color="#ff0000" size="1">', unsafe_allow_html=True)
         
+        product_cat=df.groupby('product_category',as_index=False)['orders'].sum().sort_values(by='orders',ascending=False,ignore_index=True)
+        plt.figure(figsize=(16,8))
+        ax=sns.barplot(data=product_cat,x='product_category',y='orders')
+        plt.xticks(rotation=90)
+
+        for bar in ax.containers:
+            ax.bar_label(bar)
+
+        plt.ylabel('Orders Count',fontsize=30)
+        plt.xlabel('Product Category',fontsize=30)
+        plt.title("Product wise Analysis",fontsize=50)
+        st.pyplot()
         
 
