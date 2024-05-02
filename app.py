@@ -39,9 +39,9 @@ if options=='Gender Lense':
         st.write("From above grpah we can see that most of the buyer are females and even the money spend by them on buying is greater than that of male")
 
 if options=='Age_Group Lense':
-    st.title('Age Group Wise Comparision on Purchase of  Goods During Diwali')
     btn1=st.sidebar.button('Show Age group based analysis')
     if btn1:
+        st.title('Age Group Wise Comparision on Purchase of  Goods During Diwali')
         ax=sns.countplot(data=df,x="age_group",hue='gender')
         for bars in ax.containers:
              ax.bar_label(bars)
@@ -60,3 +60,38 @@ if options=='Age_Group Lense':
 
         st.markdown('<hr color="#ff0000" size="4">', unsafe_allow_html=True)
         st.write(" From above graph we can see the most of the buyers are of the age group between 26-35 yrs female")
+
+if options=='State Lense':
+    btn2=st.sidebar.button('Show State Wise Analysis')
+    if btn2:
+        st.title('State Wise Comparision on Purchase of  Goods During Diwali')
+        st.markdown('<hr color="#ff0000" size="1">', unsafe_allow_html=True)
+    
+        top_10=df.groupby('state',as_index=False)['orders'].sum().sort_values(by='orders',ascending=False,ignore_index=True).head(10)
+        plt.bar(x=top_10['state'],height=top_10['orders'])
+        plt.xticks(rotation=90)
+
+        for i in range(top_10.shape[0]):
+            plt.text(top_10['state'].values[i],top_10['orders'].values[i],top_10['orders'].values[i])
+
+        plt.title("Top 10 Highest Ordering States")
+        plt.xlabel('States')
+        plt.ylabel('Number of Orderd items')
+        st.pyplot()
+
+        st.markdown('<hr color="#ff0000" size="1">', unsafe_allow_html=True)
+
+        top_amount=df.groupby('state',as_index=False)['amount'].sum().sort_values(by='amount',ascending=False,ignore_index=True).head(10)
+        
+        plt.bar(x=top_amount['state'],height=top_amount['amount'])
+        plt.xticks(rotation=90)
+
+        for i in range(top_amount.shape[0]):
+            plt.text(top_amount['state'].values[i],top_amount['amount'].values[i],top_amount['amount'].values[i],fontsize=6)
+
+        plt.title("Top 10 Highest Money Spending States")
+        plt.xlabel('States')
+        plt.ylabel('Amount(RS.)')
+        st.pyplot()
+        
+
